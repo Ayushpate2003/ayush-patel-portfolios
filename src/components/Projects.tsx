@@ -15,7 +15,6 @@ const projects = [
     ],
     technologies: ["Web Development", "User Research", "Offline-First Design"],
     featured: true,
-    gradient: "from-emerald-500/20 via-green-500/10 to-teal-500/20",
   },
   {
     title: "Skill Hub Quiz Website",
@@ -28,7 +27,6 @@ const projects = [
     ],
     technologies: ["Web Development", "UI Design", "Interactive Features"],
     featured: false,
-    gradient: "from-purple-500/20 via-violet-500/10 to-indigo-500/20",
   },
   {
     title: "AWS Cloud Project",
@@ -41,7 +39,6 @@ const projects = [
     ],
     technologies: ["AWS EC2", "AWS S3", "Cloud Architecture"],
     featured: true,
-    gradient: "from-orange-500/20 via-amber-500/10 to-yellow-500/20",
   },
   {
     title: "Docker-Based Project",
@@ -54,7 +51,6 @@ const projects = [
     ],
     technologies: ["Docker", "Containerization", "DevOps"],
     featured: false,
-    gradient: "from-blue-500/20 via-cyan-500/10 to-sky-500/20",
   },
 ];
 
@@ -194,7 +190,7 @@ export function Projects() {
                 onMouseLeave={(e) => handleCardHover(e, false)}
               >
                 <div
-                  className={`h-full p-8 bg-card rounded-xl border border-border hover:border-primary/50 transition-all duration-300 cursor-pointer group bg-gradient-to-br ${project.gradient}`}
+                  className="h-full p-8 bg-card rounded-xl border border-border hover:border-primary/50 transition-all duration-300 cursor-pointer group bg-gradient-to-br from-primary/5 via-transparent to-secondary/30"
                   onClick={() => setSelectedProject(project)}
                 >
                   {project.featured && (

@@ -15,7 +15,6 @@ const experiences = [
       "Assisting in feature implementation, testing, and bug fixing for live applications",
     ],
     tags: ["React", "UI/UX", "Responsive Design"],
-    color: "from-emerald-500/20 to-teal-500/20",
   },
   {
     title: "Cloud Developer Intern",
@@ -28,7 +27,6 @@ const experiences = [
       "Collaborated with the team on automation scripts and cloud service integrations",
     ],
     tags: ["Cloud", "Infrastructure", "Automation"],
-    color: "from-blue-500/20 to-cyan-500/20",
   },
   {
     title: "Computer Hardware Intern",
@@ -41,7 +39,6 @@ const experiences = [
       "Assisted in system upgrades and hardware installations to improve efficiency",
     ],
     tags: ["Hardware", "IT Support", "Troubleshooting"],
-    color: "from-orange-500/20 to-amber-500/20",
   },
 ];
 
@@ -140,7 +137,7 @@ export function Experience() {
                 {/* Content */}
                 <div className={`flex-1 pl-8 md:pl-0 ${index % 2 === 0 ? "md:pr-12" : "md:pl-12"}`}>
                   <div 
-                    className={`timeline-card opacity-0 p-6 bg-card rounded-xl border border-border hover:border-primary/50 transition-all duration-500 group hover:shadow-xl hover:shadow-primary/5 bg-gradient-to-br ${exp.color}`}
+                    className="timeline-card opacity-0 p-6 bg-card rounded-xl border border-border hover:border-primary/50 transition-all duration-500 group hover:shadow-xl hover:shadow-primary/5 bg-gradient-to-br from-primary/5 to-secondary/50"
                     style={{ transformStyle: "preserve-3d" }}
                   >
                     <div className="flex items-center gap-2 text-primary mb-2">
