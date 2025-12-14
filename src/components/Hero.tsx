@@ -192,7 +192,7 @@ export function Hero() {
           </p>
 
           {/* CTA Buttons */}
-          <div ref={ctaRef} className="flex flex-wrap gap-4 justify-center mb-12">
+          <div ref={ctaRef} className="flex flex-wrap gap-4 justify-center mb-24">
             <Button
               size="lg"
               className="px-8 py-6 text-lg font-medium glow-effect group overflow-hidden relative"
