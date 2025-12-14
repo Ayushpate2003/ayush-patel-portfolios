@@ -191,6 +191,14 @@ export function Hero() {
             Transforming complex challenges into scalable cloud solutions and secure, user-centric applications
           </p>
 
+          {/* Stats */}
+          <div className="flex flex-wrap gap-8 justify-center mb-12">
+            <div className="text-center">
+              <span className="block text-4xl md:text-5xl font-bold text-primary">5</span>
+              <span className="text-sm text-muted-foreground uppercase tracking-wider">Hackathons</span>
+            </div>
+          </div>
+
           {/* CTA Buttons */}
           <div ref={ctaRef} className="flex flex-wrap gap-4 justify-center mb-24">
             <Button
