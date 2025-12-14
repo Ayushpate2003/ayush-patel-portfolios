@@ -1,5 +1,11 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { About } from "@/components/About";
+import { Experience } from "@/components/Experience";
+import { Projects } from "@/components/Projects";
+import { Skills } from "@/components/Skills";
+import { Education } from "@/components/Education";
+import { Contact } from "@/components/Contact";
 
 const Index = () => {
   return (
@@ -7,27 +13,12 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
-        
-        {/* Placeholder sections - to be built next */}
-        <section id="about" className="min-h-screen flex items-center justify-center">
-          <p className="text-muted-foreground">About section coming soon...</p>
-        </section>
-        
-        <section id="experience" className="min-h-screen flex items-center justify-center">
-          <p className="text-muted-foreground">Experience section coming soon...</p>
-        </section>
-        
-        <section id="projects" className="min-h-screen flex items-center justify-center">
-          <p className="text-muted-foreground">Projects section coming soon...</p>
-        </section>
-        
-        <section id="skills" className="min-h-screen flex items-center justify-center">
-          <p className="text-muted-foreground">Skills section coming soon...</p>
-        </section>
-        
-        <section id="contact" className="min-h-screen flex items-center justify-center">
-          <p className="text-muted-foreground">Contact section coming soon...</p>
-        </section>
+        <About />
+        <Experience />
+        <Projects />
+        <Skills />
+        <Education />
+        <Contact />
       </main>
     </div>
   );

@@ -103,7 +103,7 @@ export function Hero() {
             className="hidden lg:flex flex-col gap-4 fixed left-8 top-1/2 -translate-y-1/2"
           >
             <a
-              href="https://github.com/ayushpatel"
+              href="https://github.com/Ayushpate2003"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
@@ -111,7 +111,7 @@ export function Hero() {
               <Github className="h-5 w-5 transition-transform group-hover:scale-110" />
             </a>
             <a
-              href="https://linkedin.com/in/ayushpatel"
+              href="https://linkedin.com/in/ayush-patel-a04515281"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
@@ -119,7 +119,7 @@ export function Hero() {
               <Linkedin className="h-5 w-5 transition-transform group-hover:scale-110" />
             </a>
             <a
-              href="mailto:ayush@example.com"
+              href="mailto:ayushpatel7869595243@gmail.com"
               className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
             >
               <Mail className="h-5 w-5 transition-transform group-hover:scale-110" />
@@ -129,7 +129,7 @@ export function Hero() {
 
           {/* Main content */}
           <p className="text-primary font-medium mb-4 tracking-wider uppercase text-sm">
-            Full-Stack Developer
+            Cloud Computing · Information Security · Frontend Development
           </p>
 
           <h1
@@ -143,8 +143,7 @@ export function Hero() {
             ref={subtitleRef}
             className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto opacity-0"
           >
-            Cloud Computing & Security Specialist crafting robust, scalable solutions
-            with modern technologies
+            Transforming complex challenges into scalable cloud solutions and secure, user-centric applications
           </p>
 
           {/* CTA Buttons */}
@@ -169,7 +168,7 @@ export function Hero() {
           {/* Mobile social links */}
           <div className="flex lg:hidden gap-4 justify-center mb-12">
             <a
-              href="https://github.com/ayushpatel"
+              href="https://github.com/Ayushpate2003"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
@@ -177,7 +176,7 @@ export function Hero() {
               <Github className="h-5 w-5" />
             </a>
             <a
-              href="https://linkedin.com/in/ayushpatel"
+              href="https://linkedin.com/in/ayush-patel-a04515281"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
@@ -185,7 +184,7 @@ export function Hero() {
               <Linkedin className="h-5 w-5" />
             </a>
             <a
-              href="mailto:ayush@example.com"
+              href="mailto:ayushpatel7869595243@gmail.com"
               className="p-3 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
             >
               <Mail className="h-5 w-5" />
