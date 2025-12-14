@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -51,12 +50,10 @@ export function Header() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
-          <ThemeToggle />
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="flex md:hidden items-center gap-4">
-          <ThemeToggle />
           <Button
             variant="ghost"
             size="icon"
