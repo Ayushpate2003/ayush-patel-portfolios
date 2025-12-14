@@ -8,49 +8,41 @@ const skillCategories = [
     title: "Cloud & DevOps",
     icon: Cloud,
     skills: ["AWS EC2", "AWS S3", "Cloud Architecture", "Docker", "Containerization", "Resource Optimization"],
-    color: "from-blue-500/20 to-cyan-500/20",
   },
   {
     title: "Frontend (React)",
     icon: Layout,
     skills: ["Component Development", "State Management", "API Integration", "Responsive Design", "Performance Optimization"],
-    color: "from-purple-500/20 to-violet-500/20",
   },
   {
     title: "Programming & Tech Stack",
     icon: Code,
     skills: ["MERN Stack", "Python", "Version Control (Git)", "JavaScript", "TypeScript"],
-    color: "from-emerald-500/20 to-green-500/20",
   },
   {
     title: "Linux & System Administration",
     icon: Terminal,
     skills: ["System Commands", "Shell Scripting", "User & File Management", "Networking", "Administration", "Troubleshooting"],
-    color: "from-orange-500/20 to-amber-500/20",
   },
   {
     title: "AI & Generative AI Tools",
     icon: Sparkles,
     skills: ["ChatGPT", "Google Gemini", "Hugging Face Transformers", "MidJourney", "DALL·E", "Runway ML", "Prompt Engineering"],
-    color: "from-pink-500/20 to-rose-500/20",
   },
   {
     title: "No-Code & AI Platforms",
     icon: Blocks,
     skills: ["Lovable AI", "Notion AI", "Canva AI", "Figma AI Plugins"],
-    color: "from-indigo-500/20 to-blue-500/20",
   },
   {
     title: "Tools & Collaboration",
     icon: Wrench,
     skills: ["MS Office", "JIRA", "Trello", "Asana", "Slack", "Power BI", "Excel"],
-    color: "from-teal-500/20 to-cyan-500/20",
   },
   {
     title: "Soft Skills",
     icon: Users,
     skills: ["Research", "Storytelling", "Content Creation", "UX Thinking", "Team Leadership", "Cross-team Communication"],
-    color: "from-yellow-500/20 to-orange-500/20",
   },
 ];
 
@@ -152,7 +144,7 @@ export function Skills() {
                   onMouseEnter={(e) => handleCardHover(e, true)}
                   onMouseLeave={(e) => handleCardHover(e, false)}
                 >
-                  <div className={`h-full p-6 bg-card rounded-xl border border-border hover:border-primary/50 transition-colors duration-300 bg-gradient-to-br ${category.color}`}>
+                  <div className="h-full p-6 bg-card rounded-xl border border-border hover:border-primary/50 transition-colors duration-300 bg-gradient-to-br from-primary/5 to-secondary/30">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="skill-icon p-2 bg-primary/10 rounded-lg">
                         <Icon className="h-5 w-5 text-primary" />
