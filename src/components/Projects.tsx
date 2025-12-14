@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import anime from "animejs";
-import { ExternalLink, Github, X } from "lucide-react";
-import { Button } from "./ui/button";
+import { ExternalLink, X, Sparkles } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const projects = [
   {
@@ -15,6 +15,7 @@ const projects = [
     ],
     technologies: ["Web Development", "User Research", "Offline-First Design"],
     featured: true,
+    gradient: "from-emerald-500/20 via-green-500/10 to-teal-500/20",
   },
   {
     title: "Skill Hub Quiz Website",
@@ -27,6 +28,7 @@ const projects = [
     ],
     technologies: ["Web Development", "UI Design", "Interactive Features"],
     featured: false,
+    gradient: "from-purple-500/20 via-violet-500/10 to-indigo-500/20",
   },
   {
     title: "AWS Cloud Project",
@@ -39,6 +41,7 @@ const projects = [
     ],
     technologies: ["AWS EC2", "AWS S3", "Cloud Architecture"],
     featured: true,
+    gradient: "from-orange-500/20 via-amber-500/10 to-yellow-500/20",
   },
   {
     title: "Docker-Based Project",
@@ -51,11 +54,14 @@ const projects = [
     ],
     technologies: ["Docker", "Containerization", "DevOps"],
     featured: false,
+    gradient: "from-blue-500/20 via-cyan-500/10 to-sky-500/20",
   },
 ];
 
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useScrollAnimation<HTMLDivElement>("fade-up");
+  const gridRef = useRef<HTMLDivElement>(null);
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
 
   useEffect(() => {
@@ -63,13 +69,19 @@ export function Projects() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            anime({
-              targets: sectionRef.current?.querySelectorAll(".project-card"),
-              opacity: [0, 1],
-              translateY: [40, 0],
-              easing: "easeOutExpo",
-              duration: 800,
-              delay: anime.stagger(100),
+            // Animate cards with staggered reveal
+            const cards = gridRef.current?.querySelectorAll(".project-card");
+            cards?.forEach((card, index) => {
+              anime({
+                targets: card,
+                opacity: [0, 1],
+                translateY: [60, 0],
+                rotateX: [15, 0],
+                scale: [0.9, 1],
+                easing: "easeOutExpo",
+                duration: 1000,
+                delay: index * 150,
+              });
             });
             observer.disconnect();
           }
@@ -85,6 +97,26 @@ export function Projects() {
     return () => observer.disconnect();
   }, []);
 
+  // Modal animation
+  useEffect(() => {
+    if (selectedProject) {
+      anime({
+        targets: ".modal-backdrop",
+        opacity: [0, 1],
+        easing: "easeOutQuad",
+        duration: 300,
+      });
+      anime({
+        targets: ".modal-content",
+        opacity: [0, 1],
+        scale: [0.9, 1],
+        translateY: [30, 0],
+        easing: "easeOutElastic(1, .8)",
+        duration: 600,
+      });
+    }
+  }, [selectedProject]);
+
   const handleCardHover = (e: React.MouseEvent<HTMLDivElement>, isEntering: boolean) => {
     const card = e.currentTarget;
     if (isEntering) {
@@ -94,10 +126,11 @@ export function Projects() {
       
       anime({
         targets: card,
-        rotateX: -y / 20,
-        rotateY: x / 20,
-        translateZ: 20,
-        duration: 300,
+        rotateX: -y / 15,
+        rotateY: x / 15,
+        translateZ: 30,
+        boxShadow: "0 25px 50px -12px hsl(var(--primary) / 0.2)",
+        duration: 400,
         easing: "easeOutQuad",
       });
     } else {
@@ -106,43 +139,67 @@ export function Projects() {
         rotateX: 0,
         rotateY: 0,
         translateZ: 0,
-        duration: 300,
-        easing: "easeOutQuad",
+        boxShadow: "0 0 0 0 transparent",
+        duration: 600,
+        easing: "easeOutElastic(1, .5)",
       });
     }
   };
 
+  const closeModal = () => {
+    anime({
+      targets: ".modal-backdrop",
+      opacity: 0,
+      easing: "easeOutQuad",
+      duration: 200,
+    });
+    anime({
+      targets: ".modal-content",
+      opacity: 0,
+      scale: 0.95,
+      easing: "easeOutQuad",
+      duration: 200,
+      complete: () => setSelectedProject(null),
+    });
+  };
+
   return (
-    <section ref={sectionRef} id="projects" className="py-24 lg:py-32 bg-secondary/30">
-      <div className="container mx-auto px-6">
+    <section ref={sectionRef} id="projects" className="py-24 lg:py-32 bg-secondary/30 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      
+      <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <p className="text-primary font-medium mb-4 tracking-wider uppercase text-sm">
-            Portfolio
-          </p>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-16">
-            Selected Projects
-          </h2>
+          <div ref={headingRef}>
+            <p className="animate-item text-primary font-medium mb-4 tracking-wider uppercase text-sm opacity-0">
+              Portfolio
+            </p>
+            <h2 className="animate-item font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-16 opacity-0">
+              Selected Projects
+            </h2>
+          </div>
 
           {/* Bento Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project, index) => (
               <div
                 key={index}
-                className={`project-card opacity-0 perspective-1000 ${
-                  project.featured ? "md:row-span-1" : ""
-                }`}
-                style={{ transformStyle: "preserve-3d" }}
+                className="project-card opacity-0"
+                style={{ 
+                  transformStyle: "preserve-3d",
+                  perspective: "1000px",
+                }}
                 onMouseMove={(e) => handleCardHover(e, true)}
                 onMouseLeave={(e) => handleCardHover(e, false)}
               >
                 <div
-                  className={`h-full p-8 bg-card rounded-xl border border-border hover:border-primary/50 transition-all duration-300 cursor-pointer group ${
-                    project.featured ? "bg-gradient-to-br from-card to-secondary/50" : ""
-                  }`}
+                  className={`h-full p-8 bg-card rounded-xl border border-border hover:border-primary/50 transition-all duration-300 cursor-pointer group bg-gradient-to-br ${project.gradient}`}
                   onClick={() => setSelectedProject(project)}
                 >
                   {project.featured && (
-                    <span className="inline-block px-3 py-1 text-xs bg-primary/10 text-primary rounded-full mb-4">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 text-xs bg-primary/10 text-primary rounded-full mb-4 border border-primary/20">
+                      <Sparkles className="h-3 w-3" />
                       Featured
                     </span>
                   )}
@@ -150,16 +207,24 @@ export function Projects() {
                     {project.title}
                   </h3>
                   <p className="text-sm text-muted-foreground mb-4">{project.subtitle}</p>
-                  <p className="text-muted-foreground mb-6">{project.description}</p>
+                  <p className="text-muted-foreground mb-6 line-clamp-2 group-hover:text-foreground/80 transition-colors">
+                    {project.description}
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1 text-xs bg-secondary rounded-full text-muted-foreground"
+                        className="px-3 py-1 text-xs bg-background/50 backdrop-blur-sm rounded-full text-muted-foreground border border-border/50 group-hover:border-primary/30 transition-colors"
                       >
                         {tech}
                       </span>
                     ))}
+                  </div>
+                  
+                  {/* Hover indicator */}
+                  <div className="mt-6 flex items-center gap-2 text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span>View Details</span>
+                    <ExternalLink className="h-4 w-4" />
                   </div>
                 </div>
               </div>
@@ -171,44 +236,52 @@ export function Projects() {
       {/* Project Modal */}
       {selectedProject && (
         <div
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-6"
-          onClick={() => setSelectedProject(null)}
+          className="modal-backdrop fixed inset-0 bg-background/80 backdrop-blur-md z-50 flex items-center justify-center p-6"
+          onClick={closeModal}
         >
           <div
-            className="bg-card border border-border rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8 animate-scale-in"
+            className="modal-content bg-card border border-border rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-start mb-6">
               <div>
+                {selectedProject.featured && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 text-xs bg-primary/10 text-primary rounded-full mb-3 border border-primary/20">
+                    <Sparkles className="h-3 w-3" />
+                    Featured
+                  </span>
+                )}
                 <h3 className="text-2xl font-bold mb-1">{selectedProject.title}</h3>
                 <p className="text-muted-foreground">{selectedProject.subtitle}</p>
               </div>
               <button
-                onClick={() => setSelectedProject(null)}
-                className="p-2 hover:bg-secondary rounded-lg transition-colors"
+                onClick={closeModal}
+                className="p-2 hover:bg-secondary rounded-lg transition-colors group"
               >
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
               </button>
             </div>
             
             <p className="text-muted-foreground mb-6">{selectedProject.description}</p>
             
-            <h4 className="font-semibold mb-3">Key Achievements</h4>
-            <ul className="space-y-2 mb-6">
+            <h4 className="font-semibold mb-3 text-primary">Key Achievements</h4>
+            <ul className="space-y-3 mb-6">
               {selectedProject.details.map((detail, i) => (
-                <li key={i} className="text-muted-foreground flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  {detail}
+                <li key={i} className="text-muted-foreground flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold shrink-0 mt-0.5">
+                    {i + 1}
+                  </span>
+                  <span className="hover:text-foreground transition-colors">{detail}</span>
                 </li>
               ))}
             </ul>
             
-            <h4 className="font-semibold mb-3">Technologies</h4>
+            <h4 className="font-semibold mb-3 text-primary">Technologies</h4>
             <div className="flex flex-wrap gap-2">
               {selectedProject.technologies.map((tech, i) => (
                 <span
                   key={i}
-                  className="px-3 py-1 text-sm bg-secondary rounded-full"
+                  className="px-4 py-2 text-sm bg-secondary rounded-lg border border-border hover:border-primary/50 transition-colors"
                 >
                   {tech}
                 </span>
