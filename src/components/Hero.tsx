@@ -142,7 +142,7 @@ export function Hero() {
           {/* Social links - left side on desktop */}
           <div
             ref={socialRef}
-            className="hidden lg:flex flex-col gap-4 fixed left-8 top-1/2 -translate-y-1/2"
+            className="hidden lg:flex flex-col gap-4 fixed left-8 top-1/2 -translate-y-1/2 z-50"
           >
             <a
               href="https://github.com/Ayushpate2003"
