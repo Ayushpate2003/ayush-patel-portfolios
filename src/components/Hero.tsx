@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import anime from "animejs";
 import { Github, Linkedin, Mail, ArrowDown, MousePointer } from "lucide-react";
 import { Button } from "./ui/button";
-import { useMagneticHover } from "@/hooks/useScrollAnimation";
 
 export function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -11,7 +10,6 @@ export function Hero() {
   const ctaRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useMagneticHover<HTMLAnchorElement>(0.4);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -245,14 +243,12 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Scroll indicator with magnetic effect */}
+        {/* Scroll indicator */}
         <a 
-          ref={scrollRef}
           href="#about" 
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-primary transition-colors p-4 group"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-primary transition-colors p-4 z-20"
         >
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-xs tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">Scroll</span>
+          <div className="flex flex-col items-center gap-1">
             <ArrowDown className="h-6 w-6 animate-bounce" />
           </div>
         </a>
