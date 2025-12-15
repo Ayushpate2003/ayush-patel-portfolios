@@ -1,40 +1,31 @@
-name: Node.js CI
+name: Production Deployment
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
-  build:
-    name: Build & Test
+  deploy:
+    name: Build & Deploy
     runs-on: self-hosted
 
-    env:
-      NEXT_WEBSITE_URL: ${{ secrets.NEXT_WEBSITE_URL }}
-      NODE_ENV: production
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [25.2.1]
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
+    - name: Build Docker Image
+      run: docker build -t portfolio-app .
 
-      - name: Install dependencies
-        run: npm ci
+    - name: Deploy to Production
+      run: |
+        docker stop portfolio-container || true
+        docker rm portfolio-container || true
+        docker run -d \
+          --name portfolio-container \
+          --restart always \
+          -p 80:80 \
+          portfolio-app
 
-      - name: Run build
-        run: npm run build
 
