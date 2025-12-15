@@ -27,5 +27,8 @@ jobs:
           --restart always \
           -p 80:80 \
           portfolio-app
+        name: Change Directory
+        run: cd /home/ayush/actions-runner/_work/ayush-patel-portfolios/ayush-patel-portfolios
+        run: pm2 restart 0
 
 
