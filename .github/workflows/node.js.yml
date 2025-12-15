@@ -1,28 +1,40 @@
-
 name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-
+    name: Build & Test
     runs-on: self-hosted
 
+    env:
+      NEXT_WEBSITE_URL: ${{ secrets.NEXT_WEBSITE_URL }}
+      NODE_ENV: production
+
     strategy:
+      fail-fast: false
       matrix:
         node-version: [25.2.1]
-        env:
-            NEXT_WEBSITE_URL: ${{secrets.NEXT_WEBSITE_URL}}
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build
+        run: npm run build
 
