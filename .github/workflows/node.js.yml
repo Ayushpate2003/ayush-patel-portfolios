@@ -25,7 +25,7 @@ jobs:
         docker run -d \
           --name portfolio-container \
           --restart always \
-          -p 80:80 \
+          -p 3000:80 \
           portfolio-app
 
     - name: Restart PM2
