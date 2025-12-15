@@ -20,12 +20,39 @@ jobs:
 
     - name: Deploy to Production
       run: |
-        docker stop portfolio-container || true
+        set -euo pipefail
+        PORT=${PORT:-3000}
+        
+        echo "Deploying to port $PORT"
+
+        # 1. Cleaning up existing container
+        docker stop portfolio-container || true 
         docker rm portfolio-container || true
+
+        # 2. Check for other containers on this port
+        echo "Checking for other containers on port $PORT..."
+        OTHER=$(docker ps --format "{{.ID}} {{.Ports}}" | grep ":$PORT->" || true)
+        if [ -n "$OTHER" ]; then
+          CID=$(echo "$OTHER" | awk '{print $1}')
+          echo "Found conflict: Container $CID is using port $PORT. Stopping it..."
+          docker stop "$CID" || true
+          docker rm "$CID" || true
+        fi
+
+        # 3. Check for non-container processes (Optional handling)
+        if command -v ss >/dev/null 2>&1; then
+           PID=$(ss -lptn "sport = :$PORT" | grep "pid=" | sed 's/.*pid=\([0-9]*\).*/\1/' | head -n 1 || true)
+           if [ -n "$PID" ]; then
+             echo "Found non-docker process $PID on port $PORT. Attempting to kill..."
+             sudo kill -9 "$PID" || true
+           fi
+        fi
+
+        # 4. Deploy
         docker run -d \
           --name portfolio-container \
           --restart always \
-          -p 3000:80 \
+          -p ${PORT}:80 \
           portfolio-app
 
     - name: Restart PM2
