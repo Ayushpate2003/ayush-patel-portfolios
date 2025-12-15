@@ -62,19 +62,26 @@ fi
 echo -e "${GREEN}Adding user $TARGET_USER to docker group...${NC}"
 run_sudo usermod -aG docker "$TARGET_USER"
 
-echo -e "${GREEN}Docker installed successfully!${NC}"
-echo -e "${GREEN}IMPORTANT: You must restart your session or the runner service for group changes to take effect.${NC}"
+# Fix socket permissions (robustness)
+echo "Ensuring /var/run/docker.sock permissions..."
+if [ -S /var/run/docker.sock ]; then
+    run_sudo chown root:docker /var/run/docker.sock
+    run_sudo chmod 660 /var/run/docker.sock
+fi
+
+echo -e "${GREEN}Docker installed and configured successfully!${NC}"
+echo -e "${GREEN}IMPORTANT: Restarting the runner service to apply group changes...${NC}"
 
 # Check for github runner service and restart if found
 if systemctl list-units --full -all | grep -q "actions.runner"; then
     RUNNER_SERVICE=$(systemctl list-units --full -all | grep "actions.runner" | head -n 1 | awk '{print $1}')
     echo "Found GitHub runner service: $RUNNER_SERVICE"
-    echo "Restarting runner service to pick up docker permissions..."
+    run_sudo systemctl restart docker
     run_sudo systemctl restart "$RUNNER_SERVICE"
-    echo -e "${GREEN}Runner service restarted.${NC}"
+    echo -e "${GREEN}Services restarted.${NC}"
 else
-    echo -e "${RED}Could not automatically find/restart the GitHub runner service.${NC}"
-    echo "If you are running the runner as a service, please restart it manually:"
-    echo "  sudo systemctl restart actions.runner.<your-runner-name>.service"
-    echo "If running interactively, stop it (Ctrl+C) and start it again."
+    echo -e "${RED}Could not automatically find the GitHub runner service.${NC}"
+    echo "Please run manually:"
+    echo "1. sudo systemctl restart docker"
+    echo "2. sudo systemctl restart actions.runner.<service-name>"
 fi

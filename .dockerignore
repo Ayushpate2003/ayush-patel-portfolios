@@ -1,6 +1,13 @@
+# .dockerignore
 node_modules
+.bun
+bun.lockb
 dist
+.build
 .git
 .github
+*.log
+.vscode
 .env
 .env.local
+coverage
